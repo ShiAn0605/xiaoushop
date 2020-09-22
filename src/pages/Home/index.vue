@@ -24,7 +24,13 @@
             <div class="iconfont icon-xiala"></div>
         </nav>
         <div class="banner">
-
+            <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="item in swiperlist" :key="item.id">
+                    <img :src="'http://localhost:3000'+item.img" alt="1">
+                </div>
+            </div>
+            </div>
         </div>
         <div class="listnav">
             <router-link to="/#" tag="div">
@@ -63,8 +69,26 @@
 </template>
 
 <script>
+    import Swiper from 'swiper'
     export default {
-        
+        data() {
+            return {
+                swiperlist:[]
+            }
+        },
+        mounted() {
+            this.$http.get('/bannerlist').then(res =>{
+                console.log(res);
+                this.swiperlist = res.data.list
+                this.$nextTick(()=>{
+                    let myswiper = new Swiper('.swiper-container',{
+                     autoplay:true
+                  })
+                })
+            })
+            
+        },
+
     }
 </script>
 
@@ -113,7 +137,9 @@ nav
             width .7rem    
 .banner
     height 3rem
-    background-color pink    
+    .swiper-container
+        width 100%
+        height 100%    
 .listnav
     height 1.8rem
     display flex
