@@ -15,7 +15,7 @@
             </div>
             <div class="categoryright">
                 <ul v-if="category.length > 0">
-                    <li v-for="(item,index) in category[ind].children" :key="item.id">
+                    <li v-for="item in category[ind].children" :key="item.id" @click="jump(item.id)">
                         <img :src="'http://localhost:3000'+item.img" alt="">
                         <p>
                             {{item.catename}}
@@ -40,6 +40,9 @@
           this.getCategroy()
         },
         methods: {
+            jump(id){
+                this.$router.push('/home/index?id='+id)
+            },
             changeCategory(i){
                 this.ind = i
             },

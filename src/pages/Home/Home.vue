@@ -45,7 +45,7 @@
         div
             flex 1
             text-align center
-            &.router-link-exact-active
+            &.router-link-active
                 color color
 
 
