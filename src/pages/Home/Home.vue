@@ -46,7 +46,7 @@
             flex 1
             text-align center
             &.router-link-exact-active
-                color red
+                color color
 
 
 </style>

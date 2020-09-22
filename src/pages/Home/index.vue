@@ -45,7 +45,7 @@
             <img src="../../assets/icon_3.jpg" alt="">
             <p>联系我们</p>
             </router-link>
-            <router-link to="/#" tag="div">
+            <router-link to="/category" tag="div">
             <img src="../../assets/icon_4.jpg" alt="">
             <p>商品分类</p>
             </router-link>
@@ -57,11 +57,12 @@
             <img src="../../assets/首页_02.jpg" alt="">
         </div>
         <div class="goods">
-            <p>全部商品</p>
-            <p>最新推荐</p>
-            <p>热门商品</p>
-            <p style=" border-right:1px solid #d0d0d0">热门商品</p>
+            <div class="goods-list">
+                <span :class="{active : index == ind}" v-for="(item,index) in navlist" :key="index" @click="changelist(index)">{{item}}</span>
+                <span style=" border-right:1px solid #d0d0d0">热门商品</span> 
+                </div>          
         </div>
+        <Goodslist v-if="goodslist.length > 0" :goodslist="goodslist[ind].content" />
         <div class="bot">
 
         </div>
@@ -70,11 +71,18 @@
 
 <script>
     import Swiper from 'swiper'
+    import Goodslist from '@/components/Goodslist'
     export default {
         data() {
             return {
-                swiperlist:[]
+                swiperlist:[],
+                navlist:["最热商品", "最新商品", "全部商品"],
+                ind:0,
+                goodslist:[]
             }
+        },
+        components:{
+            Goodslist,
         },
         mounted() {
             this.$http.get('/bannerlist').then(res =>{
@@ -86,7 +94,19 @@
                   })
                 })
             })
+            this.getGoodslist()
             
+        },
+        methods: {
+            changelist(i){
+                this.ind = i
+            },
+            getGoodslist(){
+                this.$http.get('/getindexgoods').then(res =>{
+                this.goodslist = res.data.list
+                console.log(this.goodslist);
+            })
+            }
         },
 
     }
@@ -97,7 +117,7 @@
     width 100%
     height 100%
     header 
-        height 1.1rem
+        height .88rem
         display flex
         div
             flex 1
@@ -156,15 +176,22 @@ nav
 .bot
     height 1rem
 .goods
-    display flex
+    display flex   
+    width 100%
     justify-content center
-    padding .4rem 0
-    p
-        width 1.7rem
-        height .7rem
-        border 1px solid #d0d0d0 
-        border-right none  
-        text-align center  
-        line-height .7rem
+    padding .4rem .3rem
+    .goods-list
+        width 100%
+        display flex
+        span 
+            flex 1
+            height .7rem
+            border 1px solid #d0d0d0 
+            border-right none  
+            text-align center  
+            line-height .7rem
+            &.active
+                background-color color
+                color #fff
                       
 </style>

@@ -7,7 +7,7 @@ import './utils/fontSize'
 import '../node_modules/swiper/css/swiper.css'
 import './style/iconfont/iconfont.css'
 import './style/base.styl'
-import http from './http/index'
+import http from './http'
 Vue.config.productionTip = false
 Vue.prototype.$http = http
 /* eslint-disable no-new */
