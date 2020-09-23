@@ -38,13 +38,14 @@
                 <i class="iconfont icon-gouwuche"></i>
                 <p>购物车</p>
             </div>
-            <button class="addcart">加入购物车</button>
+            <button class="addcart" @click="addcart">加入购物车</button>
             <button class="buy">立即购买</button>
         </footer>
     </div>
 </template>
 
 <script>
+    import { Toast } from 'vant';
     export default {
         data() {
             return {
@@ -62,6 +63,11 @@
             })
         },
         methods: {
+            addcart(){
+                if(this.num == 0){
+                    Toast.fail('请选择购买数量');
+                }
+            },
             changespecs(i){
                 this.ind = i
             },
