@@ -70,7 +70,7 @@
        </div>
        <div class="index-goods" v-if="id">
            <header>
-               <i class="iconfont icon-fanhui"></i>
+               <i class="iconfont icon-fanhui" @click="back"></i>
                <div class="img-box"><img src="../../assets/logo.jpg" alt=""></div>
                <i class="iconfont icon-gengduo"></i>
            </header>
@@ -141,6 +141,9 @@
             next()
         },
         methods: {
+            back(){
+                this.$router.back()
+            },
             jump(id){
                 this.$router.push('/detail?id='+id)
             },

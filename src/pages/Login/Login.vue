@@ -22,6 +22,7 @@
                 this.$http.post('/login',{phone:this.phone,password:this.password}).then(res=>{
                     if(res.data.code ==200){
                         this.$store.commit('setuser',res.data.list)
+                        this.$router.push('/home')
                     }
                 })
             }

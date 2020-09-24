@@ -1,7 +1,7 @@
 <template>
     <div class="category">
         <header>
-            <p class="iconfont icon-fanhui"></p>
+            <p class="iconfont icon-fanhui" @click="back"></p>
             <h3>商品分类</h3>
             <p class="iconfont icon-gengduo"></p>
         </header> 
@@ -40,6 +40,9 @@
           this.getCategroy()
         },
         methods: {
+            back(){
+                this.$router.back()
+            },
             jump(id){
                 this.$router.push('/home/index?id='+id)
             },

@@ -1,7 +1,7 @@
 <template>
     <div class="detail">
         <header>
-            <i class="iconfont icon-fanhui"></i>
+            <i class="iconfont icon-fanhui" @click="back"></i>
             <h3>商品详情</h3>
             <i class="iconfont icon-gengduo"></i>
         </header>
@@ -34,7 +34,7 @@
             </div>
         </main>
         <footer>
-            <div class="cart">
+            <div class="cart" @click="cart">
                 <i class="iconfont icon-gouwuche"></i>
                 <p>购物车</p>
             </div>
@@ -63,10 +63,30 @@
             })
         },
         methods: {
+            back(){
+                this.$router.back()
+            },
+            cart(){
+                this.$router.push('/home/cart')
+            },
             addcart(){
                 if(this.num == 0){
                     Toast.fail('请选择购买数量');
+                    return
                 }
+                if (!this.user.nickname) {
+                    Toast.fail('请登录,将在2秒之后自动跳到登录页');
+                    setTimeout(() => {
+                        this.$router.push("/login")
+                    }, 2000)
+                    return
+                }
+                this.$http.post('/cartadd',{uid:this.user.uid,goodsid:this.$route.query.id,num:this.num}).then(res=>{
+                    console.log(res);
+                    if(res.data.code == 200){
+                        Toast.success('已经加入购物车');
+                    }
+                })
             },
             changespecs(i){
                 this.ind = i
@@ -78,6 +98,11 @@
                 if(this.num != 0){
                     this.num--
                 }
+            }
+        },
+        computed: {
+            user(){
+                return this.$store.state.user
             }
         },
     }
